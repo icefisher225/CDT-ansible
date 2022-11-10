@@ -1,0 +1,7 @@
+---
+
+ - hosts: linux
+   roles:
+     - deploy_command
+   vars:
+     shell_command: "<command goes here>"

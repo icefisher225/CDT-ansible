@@ -1,0 +1,7 @@
+# inventory.config file in yaml
+plugin: constructed
+strict: yes
+
+groups:
+  team01: "'team01' in inventory_hostname"
+  team02: "'team02' in inventory_hostname"

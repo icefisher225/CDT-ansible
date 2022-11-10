@@ -1,0 +1,7 @@
+---
+ - name: Deploy SSH Public Keys
+   ansible.posix.authorized_key:
+     user: "{{ authorized_user }}"
+     key: "{{ item }}"
+     state: present
+   loop: "{{ authorized_ssh_keys }}"

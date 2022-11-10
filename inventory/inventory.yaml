@@ -1,0 +1,67 @@
+all:
+  vars:
+    team_num: "placeholder"
+    host_octets: "placeholder" 
+  children:
+    # Team Hosts
+    twoblue:
+      vars:
+        ansible_host: "10.{{ team_num|int }}.6.7"
+        host_octets: "7"
+      hosts:
+        twoblue.team[01:02].bigmoney.com:
+    bigmoney_mc:
+      vars:
+        ansible_host: "10.{{ team_num|int }}.7.2"
+        host_octets: "2"
+      hosts:
+        bigmoney_mc.team[01:02].bigmoney.com:
+    oneunited_web:
+      vars:
+        ansible_host: "10.{{ team_num|int }}.7.3"
+        host_octets: "3"
+      hosts: 
+        oneunited_web.team[01:02].bigmoney.com:
+    oneunited_db:
+      vars:
+        ansible_host: "10.{{ team_num|int }}.7.4"
+        host_octets: "4"
+      hosts:
+        oneunited_db.team[01:02].bigmoney.com:
+    twoblue_server:
+      vars:
+        ansible_host: "10.{{ team_num|int }}.7.6"
+        host_octets: "6"
+      hosts:
+        twoblue_server.team[01:02].bigmoney.com:
+    threestars_files:
+      vars:
+        ansible_host: "10.{{ team_num|int }}.7.8"
+        host_octets: "8"
+      hosts:
+        threestars_files.team[01:02].bigmoney.com:
+
+    # List of Linux Hosts
+    linux:
+      vars:
+        no_dns: True
+      children:
+        twoblue:
+        bigmoney_mc:
+        oneunited_web:
+        oneunited_db:
+        twoblue_server:
+        threestars_files:
+
+
+    team_hosts:
+      vars:
+        no_dns: True
+      children:
+        twoblue:
+        bigmoney_mc:
+        oneunited_web:
+        oneunited_db:
+        twoblue_server:
+        threestars_files:
+

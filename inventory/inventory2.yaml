@@ -1,0 +1,90 @@
+all:
+  children:
+    team01:
+      children:
+        twoblue:
+          vars:
+            ansible_host: "10.1.6.7"
+            host_octets: "7"
+          hosts:
+            twoblue.team01.bigmoney.com:
+        bigmoney_mc:
+          vars:
+            ansible_host: "10.1.7.2"
+            host_octets: "2"
+          hosts:
+            bigmoney_mc.team01.bigmoney.com:
+        oneunited_web:
+          vars:
+            ansible_host: "10.1.7.3"
+            host_octets: "3"
+          hosts: 
+            oneunited_web.team01.bigmoney.com:
+        oneunited_db:
+          vars:
+            ansible_host: "10.1.7.4"
+            host_octets: "4"
+          hosts:
+            oneunited_db.team01.bigmoney.com:
+        twoblue_server:
+          vars:
+            ansible_host: "10.1.7.6"
+            host_octets: "6"
+          hosts:
+            twoblue_server.team01.bigmoney.com:
+        threestars_files:
+          vars:
+            ansible_host: "10.1.7.8"
+            host_octets: "8"
+          hosts:
+            threestars_files.team01.bigmoney.com:
+    team02:
+      children:
+        twoblue:
+          vars:
+            ansible_host: "10.2.6.7"
+            host_octets: "7"
+          hosts:
+            twoblue.team02.bigmoney.com:
+        bigmoney_mc:
+          vars:
+            ansible_host: "10.2.7.2"
+            host_octets: "2"
+          hosts:
+            bigmoney_mc.team02.bigmoney.com:
+        oneunited_web:
+          vars:
+            ansible_host: "10.2.7.3"
+            host_octets: "3"
+          hosts: 
+            oneunited_web.team02.bigmoney.com:
+        oneunited_db:
+          vars:
+            ansible_host: "10.2.7.4"
+            host_octets: "4"
+          hosts:
+            oneunited_db.team02.bigmoney.com:
+        twoblue_server:
+          vars:
+            ansible_host: "10.2.7.6"
+            host_octets: "6"
+          hosts:
+            twoblue_server.team02.bigmoney.com:
+        threestars_files:
+          vars:
+            ansible_host: "10.2.7.8"
+            host_octets: "8"
+          hosts:
+            threestars_files.team02.bigmoney.com:
+
+    # List of Linux Hosts
+    linux:
+      vars:
+        no_dns: True
+      children:
+        twoblue:
+        bigmoney_mc:
+        oneunited_web:
+        oneunited_db:
+        twoblue_server:
+        threestars_files:

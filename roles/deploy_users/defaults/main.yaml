@@ -1,0 +1,12 @@
+---
+
+user_name: whiteteam
+
+user_groups: []
+
+user_shell: /bin/bash
+
+public_keys:
+ - ~/.ssh/id_rsa.pub
+
+enable_passwordless_sudo: True

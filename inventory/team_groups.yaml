@@ -1,0 +1,18 @@
+all:
+  children:
+    team01:
+      twoblue.team01.bigmoney.com
+      bigmoney_mc.team01.bigmoney.com
+      oneunited_web.team01.bigmoney.com
+      oneunited_db.team01.bigmoney.com
+      twoblue_server.team01.bigmoney.com
+      threestars_files.team01.bigmoney.com
+
+    team02:
+      twoblue.team02.bigmoney.com
+      bigmoney_mc.team02.bigmoney.com
+      oneunited_web.team02.bigmoney.com
+      oneunited_db.team02.bigmoney.com
+      twoblue_server.team02.bigmoney.com
+      threestars_files.team02.bigmoney.com
+

@@ -1,0 +1,10 @@
+---
+# Deploy SSH Keys
+- hosts: linux
+  roles:
+   - linux_deploy_ssh_public_keys
+  vars:
+    authorized_user: "bob"
+    authorized_ssh_keys:
+      # kali 8
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdMh70xA2veDK2O17BjRLWHon4X53pqGy6rdYYeMGBu5s7WVWy+9Rk8cN21N3S1YJlIlinH8NBSlyq/LdsftA1RWIYD9iwRJduRQ82chZMVsWWh51bPVlRfrG02cexOel4z1+dnie/e3pC/JnD+aU7jKADoED3Lk1YYTuuQSG0C11XNsA0IQz4m/A9H6C4VkoVoXDgBHshTkETXlkLBRG6n1jnEoAVnV8ZSxKKaGrx31HAT24uk/kY0WQ3SGULProZXhB6yq8opg7uNolKQyiaFq1pWzJh2VKdA4eEhaxxEX3BvcX1C/IpmHNPQCSRQmE2aQC+fncHe4f1vUjrUz6GQaT0wpX/U5AANsBmOVW7C3/8+TtIbr0d78V1P1SLFJV5B0z87vsH+DAfY0l8e1xRd4wLfQz8Ll8nOSzLpTYBGSSRQBLny1uWS7lziILhVnrG1GwWDsA1+cdxlPuOAxqLXAn2RhocitXdF3m1iklXscxfVk1HUU9jb/UeaidyU6k= root@kali"
