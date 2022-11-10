@@ -1,0 +1,6 @@
+---
+
+- name: Deploy Powershell command
+  win_shell: "{{ command }}"
+  register: command_output
+  when: command is defined

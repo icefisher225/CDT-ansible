@@ -1,0 +1,35 @@
+---
+
+- name: Install OpenSSH Server
+  #This should never happen, but just in case
+  win_feature:
+    name: OpenSSH.Server
+    state: present
+    include_management_tools: true
+  register: ssh_server_install
+
+- name: Autostart OpenSSH Server
+  # This one might matter, not sure on default settings
+  win_shell: "Get-Service -Name sshd | Set-Service -StartupType Automatic; Start-Service sshd"
+  when: ssh_server_install is changed
+
+- name: Configure SSH Server
+  #Not sure about this one yet
+  win_template:
+    src: sshd_config.j2
+    dest: C:\ProgramData\ssh\sshd_config
+    backup: yes
+  register: ssh_server_config
+  when: ssh_server_install is changed
+
+- name: Restart SSH Server
+  #This should happen a lot
+  win_service:
+    name: sshd
+    state: restarted
+  when: ssh_server_install is changed or ssh_server_config is changed
+
+- name: Set Powershell as Default Shell
+  #This should only happen once per box
+  win_shell: "New-ItemProperty -Path 'HKLM:\\SOFTWARE\\OpenSSH' -Name DefaultShell -Value 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe' -PropertyType String -Force"
+  when: ssh_server_install is changed
