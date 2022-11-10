@@ -10,3 +10,8 @@ public_keys:
  - ~/.ssh/id_rsa.pub
 
 enable_passwordless_sudo: True
+
+authorized_users:
+  - "whiteteam"
+  - "blueteam"
+  - "redteam"

@@ -1,0 +1,5 @@
+---
+# Deploy SSH Keys to bob, whiteteam, redteam, blueteam users
+- hosts: linux
+  roles:
+   - linux_deploy_ssh_public_keys
