@@ -2,11 +2,11 @@ import math, time, subprocess, hashlib
 
 DEBUG_PRINT = True
 
-def debug_print(*args):
+def debug_print(*args: str)-> None:
     if DEBUG_PRINT:
         print(*args)
 
-def inputFiles(trackedFiles):
+def inputFiles(trackedFiles: list[str])-> None:
     while True:
         fl = input("File you want saved: ")
         try:
@@ -21,20 +21,20 @@ def inputFiles(trackedFiles):
         if done.lower() == "done":
             break
 
-def hashFile(fl):
-    return hashlib.sha256(open(fl, "rb").read()).hexdigest()
+def hashFile(fl: str) -> str:
+    return str(hashlib.sha256(open(fl, "rb").read()).hexdigest())
 
-def hashFiles(trackedFiles, hashes):
+def hashFiles(trackedFiles: list[str], hashes: dict[str, str]) -> None:
     for fl in trackedFiles:
         debug_print(f"Hashing {fl}")
         hashes[fl] = hashFile(fl)
 
-def collectFiles(trackedFiles, savedFiles):
+def collectFiles(trackedFiles: list[str], savedFiles: dict[str, bytes]) -> None:
     for fl in trackedFiles:
         debug_print(f"Collecting {fl}")
         savedFiles[fl] = open(fl, "rb").read()
 
-def checkFiles(trackedFiles, hashes, savedFiles):
+def checkFiles(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict[str, bytes]) -> None:
     for fl in trackedFiles:
         debug_print(f"Checking {fl}")
         if hashFile(fl) != hashes[fl]:
@@ -43,9 +43,9 @@ def checkFiles(trackedFiles, hashes, savedFiles):
     time.sleep(1)
 
 def main():
-    trackedFiles = list()
-    hashes = dict()
-    savedFiles = dict()
+    trackedFiles = list[str]
+    hashes = dict[str, str]
+    savedFiles = dict[str, bytes]
     inputFiles(trackedFiles)
     hashFiles(trackedFiles, hashes)
     collectFiles(trackedFiles, savedFiles)
