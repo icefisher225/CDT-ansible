@@ -1,14 +1,10 @@
-import os, sys, multiprocessing, threading, math, time, subprocess, hashlib
+import math, time, subprocess, hashlib
 
+DEBUG_PRINT = True
 
-def main():
-    trackedFiles = list()
-    hashes = dict()
-    savedFiles = dict()
-    inputFiles(trackedFiles)
-    hashFiles(trackedFiles, hashes)
-    while True:
-        checkFiles()
+def debug_print(*args):
+    if DEBUG_PRINT:
+        print(*args)
 
 def inputFiles(trackedFiles):
     while True:
@@ -16,11 +12,11 @@ def inputFiles(trackedFiles):
         try:
             subprocess.check_output(f"cat {fl} > /dev/null", shell=True)
         except:
-            print(f"File {fl} does not exist, please try again")
+            debug_print(f"File {fl} does not exist, please try again")
         
         trackedFiles.append(fl)
 
-        print(f"Files to be saved: {trackedFiles}")
+        debug_print(f"Files to be saved: {trackedFiles}")
         done = input("Press enter to continue, or type 'done' to finish")
         if done.lower() == "done":
             break
@@ -30,21 +26,31 @@ def hashFile(fl):
 
 def hashFiles(trackedFiles, hashes):
     for fl in trackedFiles:
-        print(f"Hashing {fl}")
+        debug_print(f"Hashing {fl}")
         hashes[fl] = hashFile(fl)
 
 def collectFiles(trackedFiles, savedFiles):
     for fl in trackedFiles:
-        print(f"Collecting {fl}")
+        debug_print(f"Collecting {fl}")
         savedFiles[fl] = open(fl, "rb").read()
 
 def checkFiles(trackedFiles, hashes, savedFiles):
     for fl in trackedFiles:
-        print(f"Checking {fl}")
+        debug_print(f"Checking {fl}")
         if hashFile(fl) != hashes[fl]:
-            print(f"File {fl} has changed, reverting to saved version")
+            debug_print(f"File {fl} has changed, reverting to saved version")
             open(fl, "wb").write(savedFiles[fl])
     time.sleep(1)
+
+def main():
+    trackedFiles = list()
+    hashes = dict()
+    savedFiles = dict()
+    inputFiles(trackedFiles)
+    hashFiles(trackedFiles, hashes)
+    collectFiles(trackedFiles, savedFiles)
+    while True:
+        checkFiles()
 
 if __name__ == '__main__':
     main()
