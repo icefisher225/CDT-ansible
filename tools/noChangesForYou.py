@@ -50,7 +50,7 @@ def main():
     hashFiles(trackedFiles, hashes)
     collectFiles(trackedFiles, savedFiles)
     while True:
-        checkFiles()
+        checkFiles(trackedFiles, hashes, savedFiles)
 
 if __name__ == '__main__':
     main()
