@@ -1,8 +1,5 @@
 import math, time, subprocess, hashlib, platform, multiprocessing, threading
 
-# TODO: Multithread this, give ability to add files while running
-# TODO: Add ability to remove files from tracking
-
 DEBUG_PRINT = True
 PLATFORM = ""
 
