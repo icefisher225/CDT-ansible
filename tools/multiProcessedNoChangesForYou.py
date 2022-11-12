@@ -112,7 +112,7 @@ def mpCheckFiles(pipe: mp.Pipe) -> None:
     buf = list[str]
 
     while True:
-        buf.append(pipe.read().split(";")[1]()
+        buf.append(pipe.read().split(";")[1]())
 
         if inpt.split()[1] == "untrack":
             mpUntrackFiles(trackedFiles, hashes, savedFiles, inpt.split()[2])
