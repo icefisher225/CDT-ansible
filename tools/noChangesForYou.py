@@ -40,7 +40,7 @@ def checkFiles(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict
         if hashFile(fl) != hashes[fl]:
             debug_print(f"File {fl} has changed, reverting to saved version")
             open(fl, "wb").write(savedFiles[fl])
-    time.sleep(1)
+    time.sleep(10)
 
 def main():
     trackedFiles = list[str]
