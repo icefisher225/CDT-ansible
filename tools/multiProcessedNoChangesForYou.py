@@ -1,4 +1,6 @@
-import math, time, subprocess, hashlib, platform, multiprocessing, threading
+import math, time, subprocess, hashlib, platform
+import multiprocessing as mp
+import threading as thr
 
 # TODO: Multithread this, give ability to add files while running
 # TODO: Add ability to remove files from tracking
@@ -48,16 +50,29 @@ def fileExists(fl: str) -> bool:
 
 def inputFiles(trackedFiles: list[str])-> None:
     while True:
-        fl = input("File you want saved: ")
-        if not fileExists(fl):
-            continue
-            
-        trackedFiles.append(str(fl))
-
-        debug_print(f"Files to be saved: {trackedFiles}")
+        addFile()
+        
         done = input("Press enter to continue, or type 'done' to finish: ")
         if done.lower() == "done":
+            debug_print(f"Files to be saved: {trackedFiles}")
             break
+
+def addFile(trackedFiles: list[str], pipe: mp.Pipe) -> None:
+    fl = input("File to be added to tracking: ")
+    if not fileExists(fl):
+        return
+        
+    trackedFiles.append(fl)
+    pipe.send(f"track {fl}")
+
+def removeFile(trackedFiles: list[str], pipe: mp.Pipe) -> None:
+    fl = input("File to be removed from tracking: ")
+    if not fl in trackedFiles:
+        print(f"File {fl} is not being tracked, please try again")
+        return
+        
+    trackedFiles.remove(str(fl))
+    pipe.send(f"untrack {fl}")
 
 def hashFile(fl: str) -> str:
     with open(fl, "rb") as f:
@@ -84,18 +99,57 @@ def checkFiles(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict
         if hashFile(fl) != hashes[fl]:
             debug_print(f"File {fl} has changed, reverting to saved version")
             revertFile(fl, savedFiles)
-    time.sleep(10)
+
+def mpUntrackFiles(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict[str, bytes], fl) -> None:
+    trackedFiles.remove(fl)
+    del hashes[fl]
+    del savedFiles[fl]
+
+def mpCheckFiles(pipe: mp.Pipe) -> None:
+    trackedFiles = list[str]
+    hashes: dict[str, str]
+    savedFiles: dict[str, bytes]
+    buf = list[str]
+
+    while True:
+        buf.append(pipe.read().split(";")[1]()
+
+        if inpt.split()[1] == "untrack":
+            mpUntrackFiles(trackedFiles, hashes, savedFiles, inpt.split()[2])
+        elif inpt.split()[1] == "track":
+            trackedFiles.append(inpt.split()[2])
+            hashes[inpt.split()[2]] = hashFile(inpt.split()[2])
+            with open(inpt.split()[2], "rb") as f:
+                savedFiles[inpt.split()[2]] = f.read()
+        checkFiles(trackedFiles, hashes, savedFiles)
+        time.sleep(10)
+
+def Loop(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict[str, bytes], pipe: mp.Pipe) -> None:
+    while True:
+        inpt = input("Enter command:")
+        if inpt.lower() == "done":
+            break
+        elif inpt.lower() == "track":
+            addFile(trackedFiles, pipe)
+        elif inpt.lower() == "untrack":
+            removeFile(trackedFiles, pipe)
+        elif inpt.lower() == "help":
+            print(f"Commands: track, untrack, help, done")
+        
+
 
 def main():
     checkPlatform()
-    trackedFiles = []
-    hashes = dict()
-    savedFiles = dict()
-    inputFiles(trackedFiles)
-    hashFiles(trackedFiles, hashes)
-    collectFiles(trackedFiles, savedFiles)
-    while True:
-        checkFiles(trackedFiles, hashes, savedFiles)
+    pipe = mp.Pipe()
+    p = mp.Process(target=mpCheckFiles, args=(pipe, ))
+    p.start()
+    Loop()
+    p.join()
+    
 
 if __name__ == '__main__':
     main()
+
+
+
+    # Github CoPilot is fucking SCARY
