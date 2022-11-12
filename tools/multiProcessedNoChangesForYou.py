@@ -1,9 +1,10 @@
-import math, time, subprocess, hashlib, platform
+import hashlib
+import math
 import multiprocessing as mp
+import platform
+import subprocess
 import threading as thr
-
-# TODO: Multithread this, give ability to add files while running
-# TODO: Add ability to remove files from tracking
+import time
 
 DEBUG_PRINT = True
 PLATFORM = ""
@@ -50,14 +51,14 @@ def fileExists(fl: str) -> bool:
 
 def inputFiles(trackedFiles: list[str])-> None:
     while True:
-        addFile()
+        addFile(trackedFiles, None)
         
         done = input("Press enter to continue, or type 'done' to finish: ")
         if done.lower() == "done":
             debug_print(f"Files to be saved: {trackedFiles}")
             break
 
-def addFile(trackedFiles: list[str], pipe: mp.Pipe) -> None:
+def addFile(trackedFiles: list[str], pipe) -> None:
     fl = input("File to be added to tracking: ")
     if not fileExists(fl):
         return
@@ -65,7 +66,7 @@ def addFile(trackedFiles: list[str], pipe: mp.Pipe) -> None:
     trackedFiles.append(fl)
     pipe.send(f"track {fl}")
 
-def removeFile(trackedFiles: list[str], pipe: mp.Pipe) -> None:
+def removeFile(trackedFiles: list[str], pipe) -> None:
     fl = input("File to be removed from tracking: ")
     if not fl in trackedFiles:
         print(f"File {fl} is not being tracked, please try again")
@@ -105,11 +106,11 @@ def mpUntrackFiles(trackedFiles: list[str], hashes: dict[str, str], savedFiles: 
     del hashes[fl]
     del savedFiles[fl]
 
-def mpCheckFiles(pipe: mp.Pipe) -> None:
-    trackedFiles = list[str]
-    hashes: dict[str, str]
-    savedFiles: dict[str, bytes]
-    buf = list[str]
+def mpCheckFiles(pipe) -> None:
+    trackedFiles: list[str] = list()
+    hashes: dict[str, str] = dict()
+    savedFiles: dict[str, bytes] = dict()
+    buf: list[str] = list()
 
     while True:
         buf.append(pipe.read().split(";"))
@@ -124,10 +125,16 @@ def mpCheckFiles(pipe: mp.Pipe) -> None:
         checkFiles(trackedFiles, hashes, savedFiles)
         time.sleep(10)
 
-def Loop(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict[str, bytes], pipe: mp.Pipe) -> None:
+def Loop(trackedFiles: list[str], 
+        pipe
+        ) -> None:
+    functions = {"add": addFile, "remove": removeFile}
     while True:
         inpt = input("Enter command:")
-        if inpt.lower() == "done":
+        if str(inpt) not in functions.keys:
+            print("Invalid command, please try again")
+            continue
+        if inpt.lower() == "exit":
             break
         elif inpt.lower() == "track":
             addFile(trackedFiles, pipe)
