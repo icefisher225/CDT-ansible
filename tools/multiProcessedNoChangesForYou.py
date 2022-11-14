@@ -130,7 +130,7 @@ def Loop(trackedFiles: list[str],
         pipe
         ) -> None:
     # TODO: what the fuck, how do I type a fucking function argument
-    functions: dict[str, Callable[[list[str], tuple[connection, connection]], None]] = {"add": addFile, "remove": removeFile}
+    functions: dict[str, Callable[[list[str], tuple[mp.connection.Connection, mp.connection.Connection]], None]] = {"add": addFile, "remove": removeFile}
     while True:
         inpt = input("Enter command:")
         if not inpt in functions.keys():
