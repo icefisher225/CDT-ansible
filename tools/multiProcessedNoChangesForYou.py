@@ -5,15 +5,16 @@ import platform
 import subprocess
 import threading as thr
 import time
+from typing import Callable
 
 DEBUG_PRINT = True
 PLATFORM = ""
 
 def checkPlatform():
     global PLATFORM
-    if platform.system == "Windows":
+    if platform.system() == "Windows":
         PLATFORM = "Windows"
-    elif platform.system == "Darwin" or platform.system == "Linux":
+    elif platform.system() == "Darwin" or platform.system() == "Linux":
         PLATFORM = "Unix"
     else:
         print("Unsupported platform")
@@ -128,21 +129,19 @@ def mpCheckFiles(pipe) -> None:
 def Loop(trackedFiles: list[str], 
         pipe
         ) -> None:
-    functions = {"add": addFile, "remove": removeFile}
+    # TODO: what the fuck, how do I type a fucking function argument
+    functions: dict[str, Callable[[list[str], tuple[connection, connection]], None]] = {"add": addFile, "remove": removeFile}
     while True:
         inpt = input("Enter command:")
-        if str(inpt) not in functions.keys:
+        if not inpt in functions.keys():
             print("Invalid command, please try again")
             continue
-        if inpt.lower() == "exit":
+        elif inpt.lower() == "exit":
             break
-        elif inpt.lower() == "track":
-            addFile(trackedFiles, pipe)
-        elif inpt.lower() == "untrack":
-            removeFile(trackedFiles, pipe)
         elif inpt.lower() == "help":
             print(f"Commands: track, untrack, help, done")
-        
+        else:
+            functions[inpt](trackedFiles, pipe)
 
 
 def main():
