@@ -27,7 +27,7 @@ def windowsFileCheck(fl: str) -> bool:
 def unixFileCheck(fl: str) -> bool:
     try:
         with open("/dev/null", "w") as f:
-            subprocess.run(["ls", fl], stdout=f, check=True)
+            subprocess.run(["cat", fl], stdout=f, check=True)
         return True
     except:
         return False
