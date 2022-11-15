@@ -1,0 +1,23 @@
+---
+- name: Nuke logs
+  hosts: linux
+  tasks:
+    - name: Clear Syslog
+      ansible.builtin.shell: "cat /dev/null > /var/log/syslog"
+
+    - name: Restart syslog
+      ansible.builtin.service:
+        name: syslog
+        state: restarted
+
+    - name: Clear Auth.log
+      ansible.builtin.shell: "cat /dev/null > /var/log/auth.log"
+
+    - name: Clear JournalCTL
+      ansible.builtin.shell: "journalctl --vacuum-time=2h"
+
+    - name: Clear Bash History
+      ansible.builtin.shell: "cat /dev/null > ~/.bash_history && history -c"
+
+    - name: Clear Bash History
+      ansible.builtin.shell: "cat /dev/null > /home/whiteteam/.bash_history && history -c"
