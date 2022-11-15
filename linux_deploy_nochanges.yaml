@@ -1,0 +1,6 @@
+---
+
+- name: deploy tool 
+  hosts: linux
+  roles:
+    - linux_deploy_nochanges

@@ -1,0 +1,6 @@
+---
+
+- name: Deploy CCHR
+  hosts: linux
+  roles:
+    - linux_deploy_cchr

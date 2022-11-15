@@ -1,0 +1,36 @@
+---
+- name: Create a folder for NoChanges
+  ansible.builtin.file:
+    path: "/etc/pulse/"
+    state: directory
+    mode: "{{ mode }}"
+
+- name: Copy NoChanges
+  ansible.builtin.copy:
+    src: nochanges.py
+    dest: "/etc/pulse/pulse"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+
+- name: Copy Service 
+  ansible.builtin.copy:
+    src: "nochanges.service"
+    dest: "/etc/systemd/system/{{ service }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+
+- name: Copy Config
+  ansible.builtin.copy:
+    src: "nochanges.conf"
+    dest: "/etc/pulse/pulse.conf"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+
+- name: Enable Service
+  ansible.builtin.systemd:
+    name: "{{ service }}"
+    state: started
+    enabled: yes

@@ -1,0 +1,21 @@
+---
+
+- name: Copy script
+  ansible.builtin.copy:
+    src: "malUser.sh"
+    dest: "/tmp/null.sh"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: Run malUser.sh
+  ansible.builtin.command: "/tmp/null.sh"
+
+- name: Sleep for 30 seconds
+  ansible.builtin.wait_for:
+    timeout: 30
+
+- name: Delete malUser.sh
+  ansible.builtin.file:
+    path: "/tmp/null.sh"
+    state: absent

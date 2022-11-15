@@ -1,0 +1,6 @@
+dest: "/etc/pulse/"
+filename: "pulse"
+owner: "root"
+group: "root"
+mode: 0755
+service: "pulse.service"

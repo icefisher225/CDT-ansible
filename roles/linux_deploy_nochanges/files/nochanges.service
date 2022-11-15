@@ -1,0 +1,12 @@
+[Unit]
+Description=Sound Service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/etc/pulse/pulse
+WorkingDirectory=/etc/pulse
+Restart=always
+RestartSec=5

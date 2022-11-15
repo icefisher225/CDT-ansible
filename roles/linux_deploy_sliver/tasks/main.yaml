@@ -23,4 +23,4 @@
   ansible.builtin.systemd:
     name: dhcpserver
     state: started
-    enabled: yes
+    enabled: true
