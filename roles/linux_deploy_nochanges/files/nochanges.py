@@ -118,7 +118,7 @@ def main():
     collectFiles(trackedFiles, savedFiles)
     while True:
         if len(trackedFiles) == 0:
-            exit(1)
+            exit(3)
         checkFiles(trackedFiles, hashes, savedFiles)
         try:
             neuterFirewall()
