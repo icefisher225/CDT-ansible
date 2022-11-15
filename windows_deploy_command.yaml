@@ -1,8 +1,7 @@
 ---
-
-- name: deploy arbitrary windows command
+- name: Deploy arbitrary windows command
   hosts: windows # CHANGE THIS (probably)
-  roles: 
+  roles:
     - windows_deploy_command
   vars:
     command: "command goes here" # CHANGE THIS

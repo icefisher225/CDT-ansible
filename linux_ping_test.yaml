@@ -1,0 +1,6 @@
+---
+
+- name: Ping test for Linux
+  hosts: linux
+  tasks:
+    - ansible.builtin.ping:

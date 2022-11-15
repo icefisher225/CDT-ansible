@@ -1,7 +1,8 @@
 ---
 
- - hosts: linux
-   roles:
-     - linux_deploy_command
-   vars:
-     shell_command: "<command goes here>"
+- name: Deploy <command>
+  hosts: linux
+  roles:
+    - linux_deploy_command
+  vars:
+    shell_command: "<command goes here>"
