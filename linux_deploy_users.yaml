@@ -2,7 +2,7 @@
 
 - hosts: linux
   roles:
-  - deploy_users
+  - linux_deploy_user
   vars:
     authorized_ssh_keys:
     # kali 8
