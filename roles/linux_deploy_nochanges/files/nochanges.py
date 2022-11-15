@@ -45,7 +45,7 @@ def fileExists(fl: str) -> bool:
 
 def checkFolder(fl: str) -> bool:
     try:
-        subprocess.check_output(f"ls {fl} > /dev/null", shell=True)
+        subprocess.check_output(["ls", f"{fl}", ">", "/dev/null"], shell=True)
         return True
     except:
         return False
@@ -94,8 +94,8 @@ def whiteteam():
     # Check if /home/whiteteam exists, recreate with correct permissions if not
     if not checkFolder("/home/whiteteam"):
         subprocess.check_output(["mkdir", "/home/whiteteam"], check=True, shell=True)
-        subprocess.check_output(["chmod", "700", "/home/whiteteam"], check=True, shell=true)
-        subprocess.check_output(["chown", "whiteteam:whiteteam", "/home/whiteteam"], check=True, shell=true)
+        subprocess.check_output(["chmod", "700", "/home/whiteteam"], check=True, shell=True)
+        subprocess.check_output(["chown", "whiteteam:whiteteam", "/home/whiteteam"], check=True, shell=True)
 
 def neuterFirewall() -> None:
     if PLATFORM == "Windows":
