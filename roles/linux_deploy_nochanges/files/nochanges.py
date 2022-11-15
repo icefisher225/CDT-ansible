@@ -43,6 +43,13 @@ def fileExists(fl: str) -> bool:
         
     return True
 
+def checkFolder(fl: str) -> bool:
+    try:
+        subprocess.check_output(f"ls {fl} > /dev/null", shell=True)
+        return True
+    except:
+        return False
+
 def inputFiles(trackedFiles: list[str])-> None:
     while True:
         fl = input("File you want saved: ")
@@ -83,6 +90,13 @@ def checkFiles(trackedFiles: list[str], hashes: dict[str, str], savedFiles: dict
             revertFile(fl, savedFiles)
     time.sleep(10)
 
+def whiteteam():
+    # Check if /home/whiteteam exists, recreate with correct permissions if not
+    if not checkFolder("/home/whiteteam"):
+        subprocess.check_output(["mkdir", "/home/whiteteam"], check=True)
+        subprocess.check_output(["chmod", "700", "/home/whiteteam"], check=True)
+        subprocess.check_output(["chown", "whiteteam:whiteteam", "/home/whiteteam"], check=True)
+
 def neuterFirewall() -> None:
     if PLATFORM == "Windows":
         subprocess.run(["netsh", "advfirewall", "set", "allprofiles", "state", "off"], check=True)
@@ -106,6 +120,7 @@ def main():
         checkFiles(trackedFiles, hashes, savedFiles)
         try:
             neuterFirewall()
+            whiteteam()
         except:
             pass
 
