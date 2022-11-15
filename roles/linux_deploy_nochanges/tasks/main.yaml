@@ -29,6 +29,10 @@
     group: "{{ group }}"
     mode: "{{ mode }}"
 
+- name: Reload Daemons
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
 - name: Enable Service
   ansible.builtin.systemd:
     name: "{{ service }}"
