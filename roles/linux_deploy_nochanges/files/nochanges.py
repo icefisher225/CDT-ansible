@@ -27,7 +27,7 @@ def windowsFileCheck(fl: str) -> bool:
 def unixFileCheck(fl: str) -> bool:
     try:
         with open("/dev/null", "w") as f:
-            subprocess.run(["cat", fl], stdout=f, check=True)
+            subprocess.run(["cat", fl.strip()], stdout=f, check=True)
         return True
     except:
         return False
@@ -47,7 +47,7 @@ def fileExists(fl: str) -> bool:
 def checkFolder(fl: str) -> bool:
     try:
         with open("/dev/null", "w") as f:
-            subprocess.run(["ls", fl], stdout=f, check=True)
+            subprocess.run(["ls", fl.strip()], stdout=f, check=True)
         return True
     except:
         return False
@@ -113,7 +113,7 @@ def main():
 
     with open("/etc/pulse/pulse.conf", "r") as f:
         for line in f:
-            if fileExists(line):
+            if fileExists(line.strip()):
                 trackedFiles.append(line.strip())
 
     hashFiles(trackedFiles, hashes)
