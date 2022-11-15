@@ -26,7 +26,8 @@ def windowsFileCheck(fl: str) -> bool:
 
 def unixFileCheck(fl: str) -> bool:
     try:
-        subprocess.run(["cat", f"{fl}", ">", "/dev/null"])
+        with open("/dev/null", "w") as f:
+            subprocess.run(["ls", fl], stdout=f, check=True)
         return True
     except:
         return False
@@ -45,7 +46,8 @@ def fileExists(fl: str) -> bool:
 
 def checkFolder(fl: str) -> bool:
     try:
-        subprocess.run(["ls", f"{fl}", ">", "/dev/null"])
+        with open("/dev/null", "w") as f:
+            subprocess.run(["ls", fl], stdout=f, check=True)
         return True
     except:
         return False
