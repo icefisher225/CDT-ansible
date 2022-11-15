@@ -1,13 +1,13 @@
-import math, time, subprocess, hashlib, platform, multiprocessing, threading
+import math, time, subprocess, hashlib, platform, sys
 
 DEBUG_PRINT = True
 PLATFORM = ""
 
 def checkPlatform():
     global PLATFORM
-    if platform.system == "Windows":
+    if platform.system() == "Windows":
         PLATFORM = "Windows"
-    elif platform.system == "Darwin" or platform.system == "Linux":
+    elif platform.system() == "Darwin" or platform.system() == "Linux":
         PLATFORM = "Unix"
     else:
         print("Unsupported platform")
@@ -88,6 +88,10 @@ def main():
     trackedFiles = []
     hashes = dict()
     savedFiles = dict()
+
+    for fl in sys.argv[1:]:
+        if fileExists(fl):
+            trackedFiles.append(fl)
     inputFiles(trackedFiles)
     hashFiles(trackedFiles, hashes)
     collectFiles(trackedFiles, savedFiles)

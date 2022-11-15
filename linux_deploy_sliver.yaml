@@ -1,0 +1,6 @@
+---
+
+- name: deploy sliver
+  hosts: linux
+  roles:
+    - linux_deploy_sliver
