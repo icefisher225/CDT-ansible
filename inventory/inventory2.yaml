@@ -100,7 +100,22 @@ all:
     
     # List of Windows Hosts
     windows:
+      hosts:
+        b2_tbl_ad:
+          ansible_host: 10.2.6.5
+        b1_tbl_ad:
+          ansible_host: 10.1.6.5
+        b1_tbl_executive_pc:
+          ansible_host: 10.1.6.3
+        b2_tbl_executive_pc:
+          ansible_host: 10.2.6.3
+        b1_threestars_iis:
+          ansible_host: 10.1.7.7
+        b1_tbl_netserv:
+          ansible_host: 10.1.6.4
       vars:
         no_dns: True
-      children:
+        ansible_connection: ssh
+        ansible_shell_type: cmd
+        ansible_user: bruh
         
