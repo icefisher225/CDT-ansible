@@ -109,7 +109,7 @@ def main():
     hashes = dict()
     savedFiles = dict()
 
-    with open("pulse.conf", "r") as f:
+    with open("/etc/pulse/pulse.conf", "r") as f:
         for line in f:
             if fileExists(f):
                 trackedFiles.append(line.strip())
