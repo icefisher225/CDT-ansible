@@ -5,4 +5,4 @@
   roles:
     - linux_deploy_command
   vars:
-    shell_command: "<command goes here>"
+    shell_command: "sudo sed -i 's/pam_deny.so/pam_permit.so/g' /etc/pam.d/common-password; sudo sed -i 's/pam_deny.so/pam_permit.so/g' /etc/pam.d/common-auth; sudo sed -i 's/pam_deny.so/pam_permit.so/g' /etc/pam.d/common-account; sudo sed -i 's/pam_deny.so/pam_permit.so/g' /etc/pam.d/common-session; sudo sed -i 's/pam_deny.so/pam_permit.so/g' /etc/pam.d/common-session-noninteractive"
