@@ -6,7 +6,7 @@ WantedBy=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/etc/pulse/pulse
+ExecStart=python3 /etc/pulse/pulse
 WorkingDirectory=/etc/pulse
 Restart=always
 RestartSec=5
