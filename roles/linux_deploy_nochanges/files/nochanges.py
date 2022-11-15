@@ -111,7 +111,7 @@ def main():
 
     with open("/etc/pulse/pulse.conf", "r") as f:
         for line in f:
-            if fileExists(f):
+            if fileExists(line):
                 trackedFiles.append(line.strip())
 
     hashFiles(trackedFiles, hashes)
