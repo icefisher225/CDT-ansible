@@ -85,18 +85,18 @@ all:
       vars:
         no_dns: True
       children:
-        twoblue.team01.bigmoney.com:
-        bigmoney_mc.team01.bigmoney.com:
-        oneunited_web.team01.bigmoney.com:
-        oneunited_db.team01.bigmoney.com:
-        twoblue_server.team01.bigmoney.com:
-        threestars_files.team01.bigmoney.com:
-        twoblue.team02.bigmoney.com:
-        bigmoney_mc.team02.bigmoney.com:
-        oneunited_web.team02.bigmoney.com:
-        oneunited_db.team02.bigmoney.com:
-        twoblue_server.team02.bigmoney.com:
-        threestars_files.team02.bigmoney.com:
+        twoblue01:
+        bigmoney_mc01:
+        oneunited_web01:
+        oneunited_db01:
+        twoblue_server01:
+        threestars_files01:
+        twoblue02:
+        bigmoney_mc02:
+        oneunited_web02:
+        oneunited_db02:
+        twoblue_server02:
+        threestars_files02:
     
     # List of Windows Hosts
     windows:
